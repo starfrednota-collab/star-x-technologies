@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071426"><title>STAR-X | Supabase Setup Guide</title>
+<link rel="icon" href="assets/starx-mark.svg"><link rel="stylesheet" href="v2.css">
+<style>
+.guide{max-width:900px;margin:38px auto;padding:0 20px 60px}.guide h1{font-size:clamp(32px,5vw,48px)}.guide h2{margin-top:28px}.guide li{margin:10px 0;color:#d3dfeb;line-height:1.65}.guide code{overflow-wrap:anywhere;background:#10263d;padding:3px 6px;border-radius:5px;color:#74e6f0}.guide pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#06101e;border:1px solid #25405c;border-radius:12px;padding:16px;color:#d7f7ff}.guide .step{padding:22px;margin:18px 0}.guide a{color:#53d9e9}.warning{border-left:4px solid #e4a23a;padding:12px 16px;background:#2b2418;border-radius:8px}
+</style></head>
+<body class="v2-body"><div class="v2-wrap">
+<header class="v2-top"><a class="v2-brand" href="index.html"><img src="assets/starx-mark.svg" alt=""> STAR-X <span style="color:#42d7e9">TECHNOLOGIES</span></a><nav class="v2-links"><a href="index.html">Website</a><a href="account.html">Customer account</a><a href="dashboard.html">Admin demo</a></nav></header>
+<main class="guide">
+<div class="v2-kicker">VERSION 3 · CONNECTION GUIDE</div>
+<h1>Connect STAR-X to Supabase</h1>
+<p class="v2-muted">Follow these steps in order. You only need your Supabase Project URL and public publishable key for the browser configuration.</p>
+<div class="v2-notice"><b>Important:</b> This upgrade connects customer registration/sign-in to Supabase Auth and prepares a secure starter database. The product admin dashboard is still a demo; online payments, order processing, private software downloads and secure admin roles are not enabled yet.</div>
+
+<section class="v2-panel step"><h2>Step 1 — Open your Supabase project</h2>
+<ol><li>Go to <a href="https://supabase.com/dashboard" target="_blank" rel="noopener">Supabase Dashboard</a>.</li><li>Open your project named <b>STAR-X-STORE</b>.</li><li>Copy the <b>Project URL</b> from the project Connect panel or API settings.</li><li>Open <b>Settings → API Keys</b> and copy the <b>Publishable key</b> (often starts with <code>sb_publishable_</code>).</li></ol></section>
+
+<section class="v2-panel step"><h2>Step 2 — Paste the two public values</h2>
+<ol><li>In this website folder, right-click <code>supabase-config.js</code>.</li><li>Choose <b>Open with → Notepad</b>.</li><li>Replace only the two placeholder values below with your own values. Keep the quotation marks.</li><li>Save the file.</li></ol>
+<pre>window.STARX_SUPABASE_CONFIG = {
+  url: "https://YOUR-PROJECT-REF.supabase.co",
+  publishableKey: "sb_publishable_YOUR_PUBLIC_KEY"
+};</pre>
+<p>Do not add your key to <code>index.html</code>, <code>README.md</code> or a public social post. The publishable key is intended to be public, but database access must be protected by RLS policies.</p></section>
+
+<section class="v2-panel step"><h2>Step 3 — Create the starter database</h2>
+<ol><li>In Supabase, open <b>SQL Editor</b>.</li><li>Choose <b>New query</b>.</li><li>Open this folder's <code>supabase-setup.sql</code> in Notepad.</li><li>Copy all its contents and paste them into the SQL Editor.</li><li>Click <b>Run</b>. Confirm the query succeeds.</li></ol>
+<p>The script creates a public product catalogue and a private enquiries table. Visitors can submit enquiries, but cannot read other customers' enquiries.</p></section>
+
+<section class="v2-panel step"><h2>Step 4 — Configure customer sign-in</h2>
+<ol><li>In Supabase, open <b>Authentication → URL Configuration</b>.</li><li>Set <b>Site URL</b> to your published GitHub Pages website address, for example <code>https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY/</code>.</li><li>Add that same site address to <b>Redirect URLs</b>, then save.</li><li>Upload the updated website folder to GitHub Pages.</li><li>Open <code>account.html</code> on your published website and test registration with an email address you control. Check your inbox if email confirmation is enabled.</li></ol></section>
+
+<section class="v2-panel step"><h2>Step 5 — Verify the connection</h2>
+<ol><li>Open the published website's <code>account.html</code>.</li><li>Try creating a test account.</li><li>If it says Supabase is not configured, check <code>supabase-config.js</code> and make sure you saved it.</li><li>If a browser error appears, check that the Project URL and Publishable key were copied completely.</li></ol></section>
+
+<div class="warning"><b>Security rules</b><ul><li>Never use a Supabase <code>secret</code> key or legacy <code>service_role</code> key in this website.</li><li>Never put your database password, payment credentials or private software download URLs in JavaScript.</li><li>Do not use the demo dashboard for real customer records.</li><li>Before accepting payments or selling downloads automatically, add a trusted server-side backend and payment verification.</li></ul></div>
+<p><a href="index.html">← Return to STAR-X website</a></p>
+</main></div></body></html>
